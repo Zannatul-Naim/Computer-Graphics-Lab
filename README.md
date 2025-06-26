@@ -35,7 +35,7 @@ If a spinning gear window appears, OpenGL is correctly set up on your system.
 ## 💻 Step 3: Create a Sample OpenGL Program
 Create a file called main.cpp:
 
-```cpp
+```c
 #include <GL/glut.h>
 
 void display() {
@@ -109,4 +109,12 @@ Run this in the VS Code terminal:
 
 ```bash
 ./main
+```
+
+
+## ▶️ Step 5-B: Compile & run in terminal
+
+```bash
+  Compile: gcc main.c -o main -lglut -lGLU -lGL -lm
+  Run    : ./main
 ```
