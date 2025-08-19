@@ -1,3 +1,62 @@
+# 📘 CSE4221: Computer Graphics — Lab Manual
+
+## 🔥 Warm-Up Tasks
+
+1. Draw the **National Flag of Bangladesh**  
+2. Write **your name with animation**  
+3. Simulate a **scene of traveling through space**  
+
+---
+
+## 🧪 Experiments
+
+<!-- -. **Simulate Hidden Surface Elimination** (Visual Surface Detection)   -->
+1. **Implement the Cohen–Sutherland Line Clipping Algorithm**  
+2. **Implement the Sutherland–Hodgman Polygon Clipping Algorithm**  
+3. **Create a Bézier Curve**  
+4. Simulate **2D Geometric Transformations**:
+   - Translation  
+   - Rotation  
+   - Scaling  
+5. Draw a line using **Bresenham’s Line Drawing Algorithm**  
+6. Draw a circle using **Bresenham’s Circle Drawing Algorithm**  
+7. Draw a **Snowflake Pattern using Fractal Geometry**  
+
+
+
+# 🐢 Computer Graphics with Python Turtle
+
+---
+
+## ✅ Requirements
+
+- **Python 3.x**
+- **Tkinter** (used internally by turtle for the graphics window)  
+  → Usually comes pre-installed with the standard Python distribution.  
+  → On Linux, if you get errors like *“No module named Tkinter”*, install it using:  
+  ```bash
+  sudo apt-get install python3-tk
+  ```
+---
+
+## ⚙️ How to Run
+
+1. **Install Python** (if not already installed):  
+   https://www.python.org/downloads/
+
+2. **Download or clone** this repository.
+
+3. Open your terminal / command prompt and navigate to the folder containing the `.py` file.
+
+4. Run any program using:
+
+```bash
+python filename.py
+```
+
+
+
+
 # 🟢 OpenGL Setup on Ubuntu 22.04+ using VS Code
 
 This guide helps you set up and run **OpenGL** graphics programs on **Ubuntu 24.04** using **G++** and **Visual Studio Code** with `tasks.json`.
