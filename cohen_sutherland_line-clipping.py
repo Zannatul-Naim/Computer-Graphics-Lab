@@ -1,4 +1,4 @@
-3 # line_clippping.py
+# line_clippping.py
 
 import turtle
 import time
@@ -115,3 +115,129 @@ else:
 
 screen.update()
 screen.exitonclick()
+
+
+
+
+
+
+# import turtle
+
+# screen = turtle.Screen()
+# screen.title("Simplified Cohen-Sutherland Line Clipping")
+# screen.setup(800, 600)
+# screen.setworldcoordinates(0, 0, 800, 600)
+# screen.tracer(0)  # For instant drawing
+
+# t = turtle.Turtle()
+# t.hideturtle()
+# t.speed(0)
+# t.penup()
+
+# xmin, ymin = 200, 150
+# xmax, ymax = 600, 450
+
+# # Region Codes (using bit flags for efficiency)
+# TOP, BOTTOM, RIGHT, LEFT = 8, 4, 2, 1
+
+# def compute_code(x, y):
+#     """Generates the 4-bit region code for a point (x, y)."""
+#     code = 0
+#     if y > ymax: code |= TOP
+#     elif y < ymin: code |= BOTTOM
+#     if x > xmax: code |= RIGHT
+#     elif x < xmin: code |= LEFT
+#     return code
+
+# def cohen_sutherland_clip(x1, y1, x2, y2):
+#     """
+#     Clips a line segment from (x1, y1) to (x2, y2) against the global clipping window.
+#     Returns the new endpoints and a boolean indicating if the line is visible.
+#     """
+#     code1 = compute_code(x1, y1)
+#     code2 = compute_code(x2, y2)
+#     accept = False
+
+#     while True:
+#         # Case 1: Both endpoints are inside the window (trivially accept)
+#         if code1 == 0 and code2 == 0:
+#             accept = True
+#             break
+        
+#         # Case 2: Both endpoints share an outside region (trivially reject)
+#         elif (code1 & code2) != 0:
+#             break
+        
+#         # Case 3: At least one endpoint is outside and needs clipping
+#         else:
+#             # Pick the outside point
+#             if code1 != 0:
+#                 code_out = code1
+#                 x, y = x1, y1
+#             else:
+#                 code_out = code2
+#                 x, y = x2, y2
+
+#             # Find the intersection point with the window boundary
+#             if code_out & TOP:
+#                 x = x1 + (x2 - x1) * (ymax - y1) / (y2 - y1)
+#                 y = ymax
+#             elif code_out & BOTTOM:
+#                 x = x1 + (x2 - x1) * (ymin - y1) / (y2 - y1)
+#                 y = ymin
+#             elif code_out & RIGHT:
+#                 y = y1 + (y2 - y1) * (xmax - x1) / (x2 - x1)
+#                 x = xmax
+#             elif code_out & LEFT:
+#                 y = y1 + (y2 - y1) * (xmin - x1) / (x2 - x1)
+#                 x = xmin
+
+#             # Update the outside point with the new intersection point
+#             if code_out == code1:
+#                 x1, y1, code1 = x, y, compute_code(x, y)
+#             else:
+#                 x2, y2, code2 = x, y, compute_code(x, y)
+
+#     if accept:
+#         return x1, y1, x2, y2, True
+#     else:
+#         return None, None, None, None, False
+
+# def draw_window():
+#     """Draws the clipping rectangle."""
+#     t.pencolor("blue")
+#     t.pensize(2)
+#     t.goto(xmin, ymin)
+#     t.pendown()
+#     t.goto(xmax, ymin)
+#     t.goto(xmax, ymax)
+#     t.goto(xmin, ymax)
+#     t.goto(xmin, ymin)
+#     t.penup()
+#     screen.update()
+# if __name__ == "__main__":
+#     draw_window()
+    
+#     # Original line
+#     t.pencolor("gray")
+#     t.pensize(1)
+#     t.goto(100, 100)
+#     t.pendown()
+#     t.goto(700, 500)
+#     t.penup()
+#     screen.update()
+
+#     # Perform clipping
+#     new_x1, new_y1, new_x2, new_y2, visible = cohen_sutherland_clip(100, 100, 700, 500)
+
+#     # Draw the final result
+#     if visible:
+#         t.pencolor("red")
+#         t.pensize(3)
+#         t.goto(new_x1, new_y1)
+#         t.pendown()
+#         t.goto(new_x2, new_y2)
+#         t.penup()
+#         screen.update()
+
+#     screen.exitonclick()
