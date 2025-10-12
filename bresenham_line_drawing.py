@@ -1,63 +1,113 @@
 import turtle
-import time
+import time 
 
 screen = turtle.Screen()
-screen.title("Proper Bresenham's Line Algorithm")
-screen.setup(800, 600)
-screen.setworldcoordinates(0, 0, 800, 600) # Use standard pixel coordinates
-# screen.tracer(0)  # Turn off auto-screen updates for instant drawing
+screen.setup(1000, 800)
+screen.setworldcoordinates(0, 0, 1000, 800)
 
 t = turtle.Turtle()
 t.speed(0)
 t.hideturtle()
 
-def plot_point(x, y, color="black"):
+def plot_point(x, y):
     t.penup()
     t.goto(x, y)
-    t.dot(4, color)
+    t.dot(4)
 
-def draw_line_bresenham(x1, y1, x2, y2):
+def draw_line(x1, y1, x2, y2):
+    dx = abs(x2-x1) 
+    dy = abs(y2-y1)
 
-    dx = abs(x2 - x1)
-    dy = abs(y2 - y1)
-    
-    # Determine the direction to step in for each axis
-    sx = 1 if x1 < x2 else -1
-    sy = 1 if y1 < y2 else -1
+    sx = 1 if x1<x2 else -1 
+    sy = 1 if y1<y2 else -1 
 
-    # The decision variable 'p' is initialized.
-    # The logic is unified to handle both shallow (dx > dy) and steep (dy > dx) lines.
-    if dx > dy:  # Shallow line: step primarily in x
-        p = 2 * dy - dx
+    if dx > dy:
+        p = 2*dy-dx 
         while x1 != x2:
             plot_point(x1, y1)
-            time.sleep(0.01)
+            time.sleep(0.05)
             if p >= 0:
-                y1 += sy
-                p -= 2 * dx
-            x1 += sx
-            p += 2 * dy
-    else:  # Steep line: step primarily in y
-        p = 2 * dx - dy
+                y1 += sy 
+                p -= 2*dx 
+            x += sx 
+            p += 2*dy
+    else:
+        p = 2*dx-dy 
         while y1 != y2:
             plot_point(x1, y1)
-            time.sleep(0.01)
+            time.sleep(0.05)
             if p >= 0:
-                x1 += sx
-                p -= 2 * dy
-            y1 += sy
-            p += 2 * dx
-            
-    # Plot the final point
+                x1 += sx 
+                p -= 2*dy 
+            y1 += sy 
+            p += 2*dx 
     plot_point(x2, y2)
+
+draw_line(100, 100, 300, 300)
+screen.exitonclick()
+
+
+
+# import turtle
+# import time
+
+# screen = turtle.Screen()
+# screen.title("Proper Bresenham's Line Algorithm")
+# screen.setup(800, 600)
+# screen.setworldcoordinates(0, 0, 800, 600) # Use standard pixel coordinates
+# # screen.tracer(0)  # Turn off auto-screen updates for instant drawing
+
+# t = turtle.Turtle()
+# t.speed(0)
+# t.hideturtle()
+
+# def plot_point(x, y, color="black"):
+#     t.penup()
+#     t.goto(x, y)
+#     t.dot(4, color)
+
+# def draw_line_bresenham(x1, y1, x2, y2):
+
+#     dx = abs(x2 - x1)
+#     dy = abs(y2 - y1)
     
-    # Update the screen once at the end to show the complete line
-    # screen.update()
+#     # Determine the direction to step in for each axis
+#     sx = 1 if x1 < x2 else -1
+#     sy = 1 if y1 < y2 else -1
 
-if __name__ == "__main__":
+#     # The decision variable 'p' is initialized.
+#     # The logic is unified to handle both shallow (dx > dy) and steep (dy > dx) lines.
+#     if dx > dy:  # Shallow line: step primarily in x
+#         p = 2 * dy - dx
+#         while x1 != x2:
+#             plot_point(x1, y1)
+#             time.sleep(0.01)
+#             if p >= 0:
+#                 y1 += sy
+#                 p -= 2 * dx
+#             x1 += sx
+#             p += 2 * dy
+#     else:  # Steep line: step primarily in y
+#         p = 2 * dx - dy
+#         while y1 != y2:
+#             plot_point(x1, y1)
+#             time.sleep(0.01)
+#             if p >= 0:
+#                 x1 += sx
+#                 p -= 2 * dy
+#             y1 += sy
+#             p += 2 * dx
+            
+#     # Plot the final point
+#     plot_point(x2, y2)
+    
+#     # Update the screen once at the end to show the complete line
+#     # screen.update()
 
-    draw_line_bresenham(100, 100, 100, 300)
-    screen.exitonclick()
+# if __name__ == "__main__":
+
+#     draw_line_bresenham(100, 100, 100, 300)
+#     screen.exitonclick()
 
 
 
