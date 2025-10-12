@@ -1,86 +1,89 @@
-import turtle
+import turtle 
+import time 
 import math
-import time
 
 screen = turtle.Screen()
-screen.title("Program 3: 2D Transformations")
+screen.title("2D Transformation")
 screen.setup(1000, 800)
 screen.setworldcoordinates(0, 0, 1000, 800)
-screen.tracer(0)
 
 t = turtle.Turtle()
 t.speed(0)
 t.penup()
 
-def draw_shape(points, color, label):
+def draw_shape(points, color):
     t.pencolor(color)
     t.pensize(3)
     t.penup()
-    for i, (x, y) in enumerate(points):
+    t.goto(points[0])
+    t.pendown()
+
+    for x, y in points[1:]:
         t.goto(x, y)
         t.dot(4, color)
-        if i == 0:
-            t.pendown()
-        else:
-            t.goto(x, y)
     t.goto(points[0])
-    cx = sum(p[0] for p in points) / len(points)
-    cy = sum(p[1] for p in points) / len(points)
-    # t.penup()
-    # t.goto(cx, cy - 15)
-    # t.color("purple")
-    # t.write(label, align="center", font=("Arial", 10, "bold"))
     screen.update()
 
-def translate_point(x, y, tx, ty):
-    return x + tx, y + ty
+def translate_points(points, tx, ty):
+    new_points = []
+    for x, y in points:
+        new_points.append((x+tx, y+ty))
+    return new_points
 
-def rotate_point(x, y, angle_deg, cx, cy):
+def scale_points(points, sx, sy, cx, cy):
+    new_points = []
+    for x, y in points:
+        x_new = (x-cx)*sx + cx
+        y_new = (y-cy)*sy + cy 
+        new_points.append((x_new, y_new))
+    return new_points 
+
+def rotate_points(points, angle_deg, cx, cy):
     rad = math.radians(angle_deg)
-    cos_a, sin_a = math.cos(rad), math.sin(rad)
-    x -= cx
-    y -= cy
-    x_new = x * cos_a - y * sin_a
-    y_new = x * sin_a + y * cos_a
-    return x_new + cx, y_new + cy
+    cos_a = math.cos(rad)
+    sin_a = math.sin(rad)
 
-def scale_point(x, y, sx, sy, cx, cy):
-    x -= cx
-    y -= cy
-    x_new = x * sx
-    y_new = y * sy
-    return x_new + cx, y_new + cy
+    new_points = []
+    for x, y in points:
+        x_temp = x-cx 
+        y_temp = y-cy 
+        x_new = x_temp*cos_a - y_temp*sin_a 
+        y_new = x_temp*sin_a + y_temp*cos_a
 
-# Define triangle
-original = [(-40, -40), (40, -40), (0, 60)]
-base_x, base_y = 300, 300
-triangle = [(x + base_x, y + base_y) for x, y in original]
+        new_points.append((x_new+cx, y_new+cy))
+    return new_points
 
+t.pencolor("lightgray")
+t.pensize(1)
+t.pendown()
+t.goto(0, 400), t.goto(1000, 400)  # X-axis
+t.penup(), t.goto(500, 0), t.pendown(), t.goto(500, 800)  # Y-axis
+t.penup()
+
+original = [(-40, -40), (40, -40), (0, 0)]
+base_x, base_y = 500, 400
+triangle = []
+for x, y in original:
+    triangle.append((x+base_x, y+base_y))
+
+draw_shape(triangle, "black")
+time.sleep(1.5)
+
+# translate
+translated_points = translate_points(triangle, 100, 100)
+draw_shape(translated_points, "green")
+time.sleep(1)
+
+# calculate center
 cx = sum(p[0] for p in triangle) / 3
 cy = sum(p[1] for p in triangle) / 3
 
-print("=== 2D TRANSFORMATIONS LAB ===")
-print(f"Center of triangle: ({cx:.1f}, {cy:.1f})")
+scaled_points = scale_points(translated_points, 2, 2, cx+100, cy+100)
+draw_shape(scaled_points, "red")
+time.sleep(1)
 
-# Draw original
-draw_shape(triangle, "black", "Original")
-time.sleep(1.5)
-
-# Translate
-translated = [translate_point(x, y, 200, 0) for x, y in triangle]
-draw_shape(translated, "green", "Translated")
-print("Applied: Translation (200, 0)")
-time.sleep(1.5)
-
-# Rotate
-rotated = [rotate_point(x, y, 45, cx + 200, cy) for x, y in translated]
-draw_shape(rotated, "red", "Rotated 45°")
-print("Applied: Rotation about center")
-time.sleep(1.5)
-
-# Scale
-scaled = [scale_point(x, y, 1.5, 1.5, cx + 200, cy) for x, y in rotated]
-draw_shape(scaled, "blue", "Scaled 1.5x")
-print("Applied: Uniform scaling")
+rotated_points = rotate_points(scaled_points, 90, cx+100, cy+100)
+draw_shape(rotated_points, "blue")
+time.sleep(1)
 
 screen.exitonclick()
