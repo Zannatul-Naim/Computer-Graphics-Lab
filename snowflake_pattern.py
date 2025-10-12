@@ -1,5 +1,16 @@
 import turtle
 
+screen = turtle.Screen()
+screen.setup(1000, 800)
+screen.setworldcoordinates(0, 0, 1000, 800)
+
+t = turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+t.penup()
+t.goto(300, 600)
+t.pendown()
+
 def koch_curve(t, order, size):
     if order == 0:
         t.forward(size) 
@@ -11,24 +22,12 @@ def koch_curve(t, order, size):
         koch_curve(t, order-1, size/3)
         t.left(60)
         koch_curve(t, order-1, size/3)
-    
-
 
 def draw_koch_curve(t, order, size):
     for _ in range(4):
         koch_curve(t, order, size)
         t.right(120)
 
+draw_koch_curve(t, 5, 500)
 
-screen = turtle.Screen()
-
-snowflake_turtle = turtle.Turtle()
-snowflake_turtle.speed(0)
-
-snowflake_turtle.penup()
-snowflake_turtle.goto(-150, 90)
-snowflake_turtle.pendown()
-
-
-draw_koch_curve(snowflake_turtle, 3,300)
-turtle.done()
+screen.exitonclick()
