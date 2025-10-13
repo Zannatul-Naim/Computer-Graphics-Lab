@@ -1,64 +1,65 @@
-import turtle
+import turtle 
+import time 
 
-# Define the points that will shape the curve
-control_points = [(-200, 100), (-100, -150), (100, 150), (200, -100)]
-
+# control_points = [(-300, 0), (-150, 200), (0, -200), (150, 200), (300, 0)]
+control_points = [(400,400), (425,350), (475, 450), (525, 350), (575, 450), (600, 400)]
 
 screen = turtle.Screen()
-screen.bgcolor("white")
-pen = turtle.Turtle()
-pen.speed(0)
-pen.width(2)
-pen.color("green")
+screen.setup(1000, 800)
+screen.setworldcoordinates(0, 0, 1000, 800)
 
-pen.penup()
-# Go through many points along the curve's path (from 0.0 to 1.0)
+t = turtle.Turtle()
+t.speed(0)
+t.penup()
+
+def draw_axes(width, height):
+    t.penup()
+    t.goto(10, height/2)
+    t.pendown()
+    t.goto(width-10, height/2)
+    t.write("X")
+
+    t.penup()
+    t.goto(width/2, 10)
+    t.pendown()
+    t.goto(width/2, height-10)
+    t.write("Y")
+    t.penup()
+draw_axes(1000, 800)
+
 for i in range(101):
-    t = i / 100  # 't' is the position along the path (0% to 100%)
     
-    # Calculate the point's position using the De Casteljau's algorithm concept
-    # We repeatedly find points between our control points
-    p1 = ((1-t) * control_points[0][0] + t * control_points[1][0],
-          (1-t) * control_points[0][1] + t * control_points[1][1])
-          
-    p2 = ((1-t) * control_points[1][0] + t * control_points[2][0],
-          (1-t) * control_points[1][1] + t * control_points[2][1])
-          
-    p3 = ((1-t) * control_points[2][0] + t * control_points[3][0],
-          (1-t) * control_points[2][1] + t * control_points[3][1])
+    ti = i/100
 
-    p4 = ((1-t) * p1[0] + t * p2[0],
-          (1-t) * p1[1] + t * p2[1])
-          
-    p5 = ((1-t) * p2[0] + t * p3[0],
-          (1-t) * p2[1] + t * p2[1])
+    points = control_points.copy()
 
-    final_point = ((1-t) * p4[0] + t * p5[0],
-                   (1-t) * p4[1] + t * p5[1])
+    while len(points)>1:
+        new_points = []
+        for i in range(len(points)-1):
+            x = (1-ti)*points[i][0] + ti*points[i+1][0]
+            y = (1-ti)*points[i][1] + ti*points[i+1][1]
+            new_points.append((x, y))
+        points = new_points 
+    
+    t.goto(points[0])
+    t.pendown()
 
-    # Move the turtle to the calculated point and draw a dot
-    pen.goto(final_point)
-    pen.pendown()
-    pen.dot(3)
-    pen.penup()
+# draw control line and points
+t.color("blue")
+t.penup()
+t.goto(control_points[0])
+t.pendown()
+for p in control_points[1:]:
+    t.goto(p)
 
-pen.color("gray")
-pen.width(1)
-pen.goto(control_points[0])
-pen.pendown()
-for point in control_points[1:]:
-    pen.goto(point)
-pen.penup()
+t.color("red")
+t.penup()
+for p in control_points:
+    t.goto(p)
+    t.dot(5)
 
-pen.color("red")
-for point in control_points:
-    pen.goto(point[0], point[1] - 5)
-    pen.pendown()
-    pen.dot(8)
-    pen.penup()
-
-pen.hideturtle()
-turtle.done()
+t.hideturtle()
+screen.exitonclick()
 
 
 # import turtle
@@ -123,9 +124,10 @@ turtle.done()
 #     pen.penup()
 
 
-# WIDTH, HEIGHT = 800, 600
+# WIDTH, HEIGHT = 1000, 800
 # screen = turtle.Screen()
 # screen.setup(WIDTH, HEIGHT)
+# screen.setworldcoordinates(0, 0, WIDTH, HEIGHT)
 # screen.title("Bezier Curve")
 # screen.bgcolor("white")
 # screen.tracer(0)
@@ -137,7 +139,8 @@ turtle.done()
 
 # draw_axes(WIDTH, HEIGHT)
 
-# control_points = [(27, 243), (101, 47), (324, 197), (437, 23)]
+# # control_points = [(27, 243), (101, 47), (324, 197), (437, 23)]
+# control_points = [(400,400), (425,350), (475, 450), (525, 350), (575, 450), (600, 400)]
 # draw_bezier(control_points, steps=500)
 
 # pen.hideturtle()
